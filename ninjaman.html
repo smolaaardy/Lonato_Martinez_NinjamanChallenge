@@ -1,0 +1,186 @@
+<html>
+<head>
+    <title>NinjaMan</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .row {
+            line-height: 0;
+        }
+        
+        .wall {
+            background-color: blue;
+            height: 40px; 
+            width: 40px;
+            display: inline-block;
+        }
+        .onigiri{
+            background-color: black;
+            height: 40px;
+            width: 40px;
+            display: inline-block;
+            background-image: url('onigiri.png');
+            background-size: contain;
+        }
+        .sushi {
+            background-color: black;
+            height: 40px; 
+            width: 40px;
+            display: inline-block;
+            background-image: url('sushi.png');
+            background-size: contain;
+        }
+        #ninjaman {
+            background-color: black;
+            height: 40px; 
+            width: 40px;
+            display: inline-block;
+            background-image: url('ninja.gif');
+            background-size: contain;
+            position: absolute;
+        }
+        .blank {
+            background-color: black;
+            height: 40px; 
+            width: 40px;
+            display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id='world'></div>
+    <div id = 'ninjaman'></div>
+</body>
+<script type="text/javascript">
+    var leftValue = 40;
+    var topValue = 40;
+    var aa = ab = ac = ad = ae = ba = bb = bc = bd = be = ca = cb = cc = cd = ce = da = db = dc = dd = de = ea = eb = ec = ed = ee = 0;
+    
+    var worldDict = {
+        0: 'blank',
+        1: 'wall',
+        2: 'sushi',
+        3: 'onigiri'
+    }
+    
+    function randomizer() {
+        aa += Math.floor((Math.random() * 4));
+        ab += Math.floor((Math.random() * 4));
+        ac += Math.floor((Math.random() * 4));
+        ad += Math.floor((Math.random() * 4));
+        ae += Math.floor((Math.random() * 4));
+        ba += Math.floor((Math.random() * 4));
+        bb += Math.floor((Math.random() * 4));
+        bc += Math.floor((Math.random() * 4));
+        bd += Math.floor((Math.random() * 4));
+        be += Math.floor((Math.random() * 4));
+        ca += Math.floor((Math.random() * 4));
+        cb += Math.floor((Math.random() * 4));
+        cc += Math.floor((Math.random() * 4));
+        cd += Math.floor((Math.random() * 4));
+        ce += Math.floor((Math.random() * 4));
+        da += Math.floor((Math.random() * 4));
+        db += Math.floor((Math.random() * 4));
+        dc += Math.floor((Math.random() * 4));
+        dd += Math.floor((Math.random() * 4));
+        de += Math.floor((Math.random() * 4));
+        ea += Math.floor((Math.random() * 4));
+        eb += Math.floor((Math.random() * 4));
+        ec += Math.floor((Math.random() * 4));
+        ed += Math.floor((Math.random() * 4));
+        ee += Math.floor((Math.random() * 4));
+        console.log(world);
+    }
+randomizer();
+
+    var world = [
+        [1, 1, 1, 1, 1, 1, 1],
+        [1, aa, ab, ac, ad, ae, 1],
+        [1, ba, bb, bc, bd, be, 1],
+        [1, ca, cb, cc, cd, ce, 1],
+        [1, da, db, dc, dd, de, 1],
+        [1, ea, eb, ec, ed, ee, 1],
+        [1, 1, 1, 1, 1, 1, 1],
+    ];
+    function drawWorld(){
+        output = "";
+        for(var row = 0; row < world.length; row++){
+            output += "<div class = 'row'></div>";
+            for(var x = 0; x < world[row].length; x++){
+                output += "<div class = '" + worldDict[world[row][x]] +"'></div>"
+                worldDict[world[row][x]];
+            }
+            output += "</div>"
+        }
+        document.getElementById('world').innerHTML = output;
+    }
+    drawWorld();
+ 
+    var ninjaman = {
+        x: 1,
+        y: 1
+}
+    var score = 0;
+    function update(){
+        document.getElementById("ninjaman").style.left = ninjaman.x * 40 +"px";
+        document.getElementById("ninjaman").style.top = ninjaman.y * 40 + "px";
+    }
+ update();
+    document.onkeydown = function(e){
+        console.log('e: ', e);
+        console.log('e.keyCode', e.keyCode);
+        // up = 38, left = 37, down = 40, right = 39
+        if(e.keyCode == 38){
+            if(world[ninjaman.y - 1][ninjaman.x] != 1){
+                ninjaman.y -= 1;
+                if(world[ninjaman.y][ninjaman.x] == 2){
+                    score += 10;
+                }
+                else if (world[ninjaman.y][ninjaman.x] == 3) {
+                    score += 5;
+                }
+            }
+        }
+        else if(e.keyCode == 37){
+            if(world[ninjaman.y][ninjaman.x - 1] != 1){
+                ninjaman.x -= 1;
+                if (world[ninjaman.y][ninjaman.x] == 2) {
+                    score += 10;
+                }
+                else if (world[ninjaman.y][ninjaman.x] == 3) {
+                    score += 5;
+                }
+            }
+        }
+        else if(e.keyCode == 40){
+            if(world[ninjaman.y + 1][ninjaman.x] != 1){
+                ninjaman.y += 1;
+                if (world[ninjaman.y][ninjaman.x] == 2) {
+                    score += 10;
+                }
+                else if (world[ninjaman.y][ninjaman.x] == 3) {
+                    score += 5;
+                }
+            }
+        } 
+        else if(e.keyCode == 39){
+            if(world[ninjaman.y][ninjaman.x + 1] != 1){
+                ninjaman.x += 1;
+                if (world[ninjaman.y][ninjaman.x] == 2) {
+                    score += 10;
+                }
+                else if(world[ninjaman.y][ninjaman.x] == 3){
+                    score += 5;
+                }
+            }
+        }
+        world[ninjaman.y][ninjaman.x] = 0;
+        update();
+        drawWorld();
+        console.log(score)
+    }
+</script>
+</html>
